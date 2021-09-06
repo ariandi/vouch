@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const chatController = require('../controllers/chat.controller');
+const userController = require('../controllers/user.controller');
 // const auth = require('../middleware/auth.middleware');
 // const Role = require('../utils/userRoles.utils');
 const awaitHandlerFactory = require('../middleware/awaitHandlerFactory.middleware');
@@ -8,7 +9,8 @@ const awaitHandlerFactory = require('../middleware/awaitHandlerFactory.middlewar
 const { createUserSchema, validateLogin } = require('../middleware/validator/chatValidator.middleware');
 
 
-router.get('/users/', [], awaitHandlerFactory(chatController.getAllUsers)); // localhost:3000/api/v1/users
+router.get('/users/', [], awaitHandlerFactory(userController.getAllUsers));
+router.get('/chats/', [], awaitHandlerFactory(chatController.getAllChat));
 // router.get('/users/', auth(), awaitHandlerFactory(userController.getAllUsers)); // localhost:3000/api/v1/users
 
 // router.get('/users/id/:id', auth(), awaitHandlerFactory(userController.getUserById)); // localhost:3000/api/v1/users/id/1
@@ -23,6 +25,6 @@ router.get('/users/', [], awaitHandlerFactory(chatController.getAllUsers)); // l
 // router.delete('/users/id/:id', auth(Role.SuperUser.name), awaitHandlerFactory(userController.deleteUser)); // localhost:3000/api/v1/users/id/1
 
 
-// router.post('/login', validateLogin, awaitHandlerFactory(chatController.userLogin)); // localhost:3000/apiv1/login
+router.post('/login', validateLogin, awaitHandlerFactory(userController.userLogin)); // localhost:3000/apiv1/login
 
 module.exports = router;
