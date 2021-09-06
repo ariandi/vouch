@@ -34,6 +34,7 @@ app.get('/chats', async (req, res) => {
     console.log(e);
     message = JSON.stringify(e);
     code = '01';
+    res.status(500);
   }
 
   res.send({message, code, data});
