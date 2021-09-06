@@ -25,6 +25,19 @@ class ChatController {
     res.status(200);
     res.send(result);
   };
+
+  createChat = async (req, res) => {
+    res.set('Content-Type', 'application/json');
+    const { username, room_id, message } = req.body;
+    const result = await ChatModel.create({username, room_id, message});
+
+    if (!result || result.code !== '00') {
+      throw new HttpException(500, 'Something went wrong when insert chat');
+    }
+
+    res.status(200);
+    res.send(result);
+  };
 }
 
 

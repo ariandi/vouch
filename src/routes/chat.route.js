@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const chatController = require('../controllers/chat.controller');
 const userController = require('../controllers/user.controller');
-// const auth = require('../middleware/auth.middleware');
+const auth = require('../middleware/auth.middleware');
 // const Role = require('../utils/userRoles.utils');
 const awaitHandlerFactory = require('../middleware/awaitHandlerFactory.middleware');
 
@@ -11,6 +11,7 @@ const { createUserSchema, validateLogin } = require('../middleware/validator/cha
 
 router.get('/users/', [], awaitHandlerFactory(userController.getAllUsers));
 router.get('/chats/', [], awaitHandlerFactory(chatController.getAllChat));
+router.post('/chats/', auth(), awaitHandlerFactory(chatController.createChat));
 // router.get('/users/', auth(), awaitHandlerFactory(userController.getAllUsers)); // localhost:3000/api/v1/users
 
 // router.get('/users/id/:id', auth(), awaitHandlerFactory(userController.getUserById)); // localhost:3000/api/v1/users/id/1

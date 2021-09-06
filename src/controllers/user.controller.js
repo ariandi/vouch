@@ -41,7 +41,6 @@ class UserController {
 
   updateUser = async (paramsSet, paramsWhere) => {
     paramsSet.updatedAt = moment().format('YYYY-MM-DD HH:mm:ss');
-    console.log(paramsSet);
     const result = await UserModel.update(paramsSet, paramsWhere);
 
     if (!result || result.code !== '00') {
@@ -96,7 +95,6 @@ class UserController {
     if (!userUpdate) {
       throw new HttpException(500, 'Error updating user');
     } else {
-      console.log(userUpdate);
       user.is_logged_in = 1;
     }
 

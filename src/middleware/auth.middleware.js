@@ -25,7 +25,7 @@ const auth = (...roles) => {
       if (!user) {
         throw new HttpException(401, 'Authentication failed!');
       } else {
-        user = user[0];
+        user = user.data[0];
       }
 
       // check if the current user is the owner user
