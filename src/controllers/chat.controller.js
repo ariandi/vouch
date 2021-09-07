@@ -1,6 +1,5 @@
 const ChatModel = require('../models/chat.model');
 const HttpException = require('../utils/HttpException.utils');
-const moment = require('moment');
 
 /******************************************************************************
  *                              User Controller

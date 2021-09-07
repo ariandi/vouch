@@ -39,6 +39,20 @@ class UserController {
     return result;
   };
 
+  updateUserReq = async (req, res) => {
+    res.set('Content-Type', 'application/json');
+    let paramsSet = req.body;
+    let paramsWhere = { where: { id: req.params.id  }};
+
+    let userUpdate = await this.updateUser(paramsSet, paramsWhere);
+    if (!userUpdate) {
+      throw new HttpException(500, 'Error updating user');
+    }
+
+    res.status(200);
+    res.send(userUpdate);
+  };
+
   updateUser = async (paramsSet, paramsWhere) => {
     paramsSet.updatedAt = moment().format('YYYY-MM-DD HH:mm:ss');
     const result = await UserModel.update(paramsSet, paramsWhere);

@@ -6,10 +6,11 @@ const auth = require('../middleware/auth.middleware');
 // const Role = require('../utils/userRoles.utils');
 const awaitHandlerFactory = require('../middleware/awaitHandlerFactory.middleware');
 
-const { createUserSchema, validateLogin } = require('../middleware/validator/chatValidator.middleware');
+const { validateLogin } = require('../middleware/validator/chatValidator.middleware');
 
 
 router.get('/users/', [], awaitHandlerFactory(userController.getAllUsers));
+router.put('/users/:id', [], awaitHandlerFactory(userController.updateUserReq));
 router.get('/chats/', [], awaitHandlerFactory(chatController.getAllChat));
 router.post('/chats/', auth(), awaitHandlerFactory(chatController.createChat));
 // router.get('/users/', auth(), awaitHandlerFactory(userController.getAllUsers)); // localhost:3000/api/v1/users
