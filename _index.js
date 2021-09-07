@@ -25,10 +25,10 @@ io.on('connection', (socket) => {
     io.emit('usersChanged', {user: socket.username, event: 'left'});
   });
 
-  socket.on('set-name', (name) => {
-    socket.username = name;
-    console.log(name)
-    io.emit('usersChanged', {user: name, event: 'joined'});
+  socket.on('input-chat', async (room_id) => {
+    let where = { room_id: room_id };
+    let data = await Chats.findAll({where});
+    io.emit('chatChanged', {data: data, event: 'joined'});
   });
 });
 
