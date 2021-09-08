@@ -1,6 +1,6 @@
 // const query = require('../db/db-connection');
 // const HttpException = require('../utils/HttpException.utils');
-const { Users } = require('../../models');
+const Users = require('../../models/UsersMonggo');
 
 class UserModel {
   find = async (params = {}) => {
@@ -10,7 +10,7 @@ class UserModel {
     let data = [];
 
     try {
-      data = await Users.findAll(params);
+      data = await Users.find(params);
     } catch (e) {
       console.log(e);
       message = JSON.stringify(e);
@@ -25,8 +25,10 @@ class UserModel {
     let code = '00';
     let data;
 
+    const UsersPost = new Users(params);
+
     try {
-      data = await Users.create(params);
+      data = await UsersPost.save();
     } catch (e) {
       console.log(e);
       message = JSON.stringify(e);
@@ -41,8 +43,12 @@ class UserModel {
     let code = '00';
     let data;
 
+    console.log('params', params);
+    console.log('paramsWhere', paramsWhere);
+
+
     try {
-      data = await Users.update(params, paramsWhere);
+      data = await Users.updateOne(params, paramsWhere);
     } catch (e) {
       console.log(e);
       message = JSON.stringify(e);

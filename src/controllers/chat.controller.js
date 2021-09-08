@@ -11,7 +11,7 @@ class ChatController {
     let result;
     let where = {}
     if (req.query) {
-      where = { where: req.query }
+      where = req.query;
     }
 
     result = await ChatModel.find(where);

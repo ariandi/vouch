@@ -14,7 +14,7 @@ class UserController {
     let result;
     let where = {}
     if (req.query) {
-      where = { where: req.query }
+      where = req.query;
     }
 
     result = await UserModel.find(where);
@@ -29,7 +29,6 @@ class UserController {
   };
 
   createUser = async (params) => {
-    params.createdAt = moment().format('YYYY-MM-DD HH:mm:ss');
     const result = await UserModel.create(params);
 
     if (!result || result.code !== '00') {
@@ -41,8 +40,8 @@ class UserController {
 
   updateUserReq = async (req, res) => {
     res.set('Content-Type', 'application/json');
-    let paramsSet = req.body;
-    let paramsWhere = { where: { id: req.params.id  }};
+    let paramsSet = { _id: req.params.id.toString()  };
+    let paramsWhere = req.body;
 
     let userUpdate = await this.updateUser(paramsSet, paramsWhere);
     if (!userUpdate) {
@@ -54,7 +53,7 @@ class UserController {
   };
 
   updateUser = async (paramsSet, paramsWhere) => {
-    paramsSet.updatedAt = moment().format('YYYY-MM-DD HH:mm:ss');
+    paramsWhere.updated_at = moment().format('YYYY-MM-DD HH:mm:ss');
     const result = await UserModel.update(paramsSet, paramsWhere);
 
     if (!result || result.code !== '00') {
@@ -71,7 +70,7 @@ class UserController {
     const { username } = req.body;
     let result = {};
 
-    let user = await UserModel.find({where: {username: username}});
+    let user = await UserModel.find({username: username});
     if (!user) {
       throw new HttpException(401, 'Unable to login!');
     }
@@ -102,8 +101,8 @@ class UserController {
       }
     }
 
-    let paramsSet = { is_logged_in: 1 };
-    let paramsWhere = { where: { id: user.id  }};
+    let paramsSet = { _id: user._id  };
+    let paramsWhere = { is_logged_in: 1 };
 
     let userUpdate = await this.updateUser(paramsSet, paramsWhere);
     if (!userUpdate) {

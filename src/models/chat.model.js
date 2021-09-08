@@ -1,6 +1,6 @@
 // const query = require('../db/db-connection');
 // const HttpException = require('../utils/HttpException.utils');
-const { Chats } = require('../../models');
+const Chats = require('../../models/ChatsMonggo');
 
 class ChatModel {
   find = async (params = {}) => {
@@ -10,7 +10,7 @@ class ChatModel {
     let data = [];
 
     try {
-      data = await Chats.findAll(params);
+      data = await Chats.find(params);
     } catch (e) {
       console.log(e);
       message = JSON.stringify(e);
@@ -25,9 +25,11 @@ class ChatModel {
     let code = '00';
     let data;
 
+    const ChatsPost = new Chats(params);
+
     try {
       console.log(params)
-      data = await Chats.create(params);
+      data = await ChatsPost.save(params);
     } catch (e) {
       console.log(e);
       message = JSON.stringify(e);
