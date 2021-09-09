@@ -1,0 +1,5 @@
+To run the app
+- npm run install
+- npm run dev
+- open other terminal in same directory
+- node _index.js
